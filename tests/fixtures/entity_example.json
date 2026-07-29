@@ -1,0 +1,40 @@
+{
+  "_comment": "Gekürzte Wikidata-Entity, nur die Felder, die extract() liest.",
+  "id": "Q1",
+  "descriptions": { "en": { "language": "en", "value": "Beispielperson" } },
+  "claims": {
+    "P2218": [
+      {
+        "mainsnak": {
+          "datavalue": {
+            "value": { "amount": "+1000000000", "unit": "http://www.wikidata.org/entity/Q4917" }
+          }
+        },
+        "qualifiers": { "P585": [{ "datavalue": { "value": { "time": "+2020-01-01T00:00:00Z" } } }] }
+      },
+      {
+        "mainsnak": {
+          "datavalue": {
+            "value": { "amount": "+50000000000", "unit": "http://www.wikidata.org/entity/Q4917" }
+          }
+        },
+        "qualifiers": { "P585": [{ "datavalue": { "value": { "time": "+2024-06-01T00:00:00Z" } } }] }
+      }
+    ],
+    "P39": [
+      {
+        "mainsnak": { "datavalue": { "value": { "id": "Q100" } } }
+      },
+      {
+        "mainsnak": { "datavalue": { "value": { "id": "Q101" } } },
+        "qualifiers": { "P582": [{ "datavalue": { "value": { "time": "+2019-01-01T00:00:00Z" } } }] }
+      }
+    ],
+    "P169": [{ "mainsnak": { "datavalue": { "value": { "id": "Q200" } } } }],
+    "P18": [{ "mainsnak": { "datavalue": { "value": "Beispiel Bild.jpg" } } }]
+  },
+  "sitelinks": {
+    "enwiki": { "title": "Example Person" },
+    "dewiki": { "title": "Beispielperson" }
+  }
+}

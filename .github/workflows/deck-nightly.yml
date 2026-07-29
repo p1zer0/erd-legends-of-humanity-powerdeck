@@ -1,0 +1,50 @@
+name: Deck aktualisieren
+
+# Pageviews und Berichterstattung ändern sich täglich – das Deck lebt mit.
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Deck bauen
+        run: python -m powerdeck 2>&1 | tee build.log
+        env:
+          PYTHONPATH: src
+
+      # GDELT drosselt unregelmäßig. Ein zweiter Lauf holt genau die Personen
+      # nach, die beim ersten leer geblieben sind – alles andere kommt aus dem Cache.
+      - name: Fehlende Karten nachholen
+        run: python -m powerdeck
+        env:
+          PYTHONPATH: src
+
+      - name: Warnungen in die Zusammenfassung schreiben
+        if: always()
+        run: |
+          {
+            echo '## Hinweise aus dem Lauf'
+            echo '```'
+            grep -A100 'Karten mit Hinweisen' build.log || echo 'keine'
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Änderungen committen
+        run: |
+          git config user.name  'powerdeck-bot'
+          git config user.email 'powerdeck-bot@users.noreply.github.com'
+          git add public/cards.json
+          git diff --staged --quiet || git commit -m "Deck aktualisiert ($(date -u +%F))"
+          git push

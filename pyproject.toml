@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "powerdeck"
+version = "1.0.0"
+description = "Machtwerte für das ERD-Kartenspiel aus offenen Datenquellen"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+keywords = ["open-data", "wikidata", "gdelt", "media-bias", "game-data"]
+# Bewusst ohne Laufzeitabhängigkeiten: nur die Standardbibliothek.
+dependencies = []
+
+[project.scripts]
+powerdeck = "powerdeck.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM"]

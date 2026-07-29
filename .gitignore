@@ -1,0 +1,17 @@
+# API-Cache – wird bei Bedarf neu geholt
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+build/
+dist/
+*.egg-info/
+.venv/
+venv/
+
+# Logs & lokale Läufe
+*.log
+
+# macOS
+.DS_Store

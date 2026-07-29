@@ -1,0 +1,289 @@
+{
+  "_comment": [
+    "Startset für PowerDeck. 'hard' sind redaktionelle Schätzwerte 0-100 für Machtdimensionen,",
+    "die keine API liefert (Militär, Nuklear, Daten, Compute). Sie sind bewusst editierbar –",
+    "'note' begründet den Wert, damit er im Spiel belegbar ist.",
+    "Alles andere (Kapital, Narrativ, Polarisierung, Chaos) zieht der Builder live aus APIs.",
+    "'expect' ist ein Stichwort aus Amt/Rolle: der Builder warnt, wenn Wikidata das nicht mehr bestätigt",
+    "(Amtswechsel, Todesfall) – so veraltet das Deck nicht still."
+  ],
+
+  "factions": {
+    "staat": "Staatsmacht – Kommandogewalt, Territorium, Gewaltmonopol",
+    "tech": "Tech & AI – Rechenleistung, Modelle, Plattformen",
+    "kapital": "Kapital – Vermögen, Zinsen, Kapitalallokation",
+    "narrativ": "Narrativ – Reichweite, Deutungshoheit, Aufmerksamkeit"
+  },
+
+  "persons": [
+    {
+      "name": "Donald Trump",
+      "faction": "staat",
+      "expect": "president",
+      "hard": { "militaer": 100, "nuklear": 98, "daten": 60, "compute": 45, "kapital_override": 82 },
+      "note": "Oberbefehl über den größten Militärhaushalt der Welt und das US-Nukleararsenal; Kapital-Override, weil fiskalische Macht des US-Staats das Privatvermögen um Größenordnungen übersteigt."
+    },
+    {
+      "name": "Xi Jinping",
+      "faction": "staat",
+      "expect": "general secretary",
+      "hard": { "militaer": 92, "nuklear": 80, "daten": 95, "compute": 78, "kapital_override": 88 },
+      "note": "Kommando über die VBA, staatlicher Zugriff auf die Daten von ~1,4 Mrd Menschen, Steuerung industrieller Kapitalallokation."
+    },
+    {
+      "name": "Vladimir Putin",
+      "faction": "staat",
+      "expect": "president",
+      "hard": { "militaer": 85, "nuklear": 100, "daten": 62, "compute": 30, "kapital_override": 62 },
+      "note": "Größtes Nukleararsenal der Welt nach Sprengkopfzahl; konventionelle und Energie-Hebel gegen Europa."
+    },
+    {
+      "name": "Narendra Modi",
+      "faction": "staat",
+      "expect": "prime minister",
+      "hard": { "militaer": 74, "nuklear": 62, "daten": 88, "compute": 48, "kapital_override": 70 },
+      "note": "Nuklearmacht, weltgrößte Wählerschaft, Aadhaar als biometrisches Identitätssystem für über 1 Mrd Menschen."
+    },
+    {
+      "name": "Mojtaba Khamenei",
+      "faction": "staat",
+      "expect": "supreme leader",
+      "hard": { "militaer": 52, "nuklear": 40, "daten": 40, "compute": 14, "kapital_override": 44 },
+      "note": "Seit 08.03.2026 Oberster Führer als Nachfolger seines im Februar 2026 getöteten Vaters; religiös-politische Letztinstanz über IRGC und Stellvertreter-Netzwerke. Werte gegenüber Ali Khamenei abgesenkt, weil die Autorität nach dem Machtwechsel noch nicht gefestigt ist. Nuklearwert = Schwellenmacht, keine deklarierten Sprengköpfe."
+    },
+    {
+      "name": "Kim Jong Un",
+      "faction": "staat",
+      "expect": "supreme leader",
+      "hard": { "militaer": 55, "nuklear": 70, "daten": 20, "compute": 8, "kapital_override": 22 },
+      "note": "Kleines Arsenal, aber vollständige Verfügungsgewalt ohne institutionelle Bremse – hoher Nuklearwert bei niedriger Gesamtressource."
+    },
+    {
+      "name": "Mohammed bin Salman",
+      "faction": "staat",
+      "expect": "prime minister",
+      "hard": { "militaer": 58, "nuklear": 10, "daten": 35, "compute": 55, "kapital_override": 85 },
+      "note": "Verfügung über den PIF-Staatsfonds, OPEC-Hebel auf den Ölpreis, milliardenschwere KI-Rechenzentrumsprogramme."
+    },
+    {
+      "name": "Benjamin Netanyahu",
+      "faction": "staat",
+      "expect": "prime minister",
+      "hard": { "militaer": 66, "nuklear": 55, "daten": 58, "compute": 45, "kapital_override": 40 },
+      "note": "Undeklariertes Nukleararsenal, führende Cyber- und Überwachungsindustrie."
+    },
+    {
+      "name": "Recep Tayyip Erdoğan",
+      "faction": "staat",
+      "expect": "president",
+      "hard": { "militaer": 62, "nuklear": 8, "daten": 40, "compute": 22, "kapital_override": 45 },
+      "note": "Zweitgrößte NATO-Armee, Kontrolle der Meerengen, Drohnenexporteur."
+    },
+    {
+      "name": "Emmanuel Macron",
+      "faction": "staat",
+      "expect": "president",
+      "hard": { "militaer": 66, "nuklear": 66, "daten": 52, "compute": 42, "kapital_override": 62 },
+      "note": "Einzige Nuklearmacht der EU, ständiger Sitz im UN-Sicherheitsrat."
+    },
+    {
+      "name": "Friedrich Merz",
+      "faction": "staat",
+      "expect": "chancellor",
+      "hard": { "militaer": 52, "nuklear": 5, "daten": 50, "compute": 40, "kapital_override": 72 },
+      "note": "Größte Volkswirtschaft der EU, faktisches Vetogewicht in EU-Haushaltsfragen; keine eigenen Nuklearwaffen (nukleare Teilhabe)."
+    },
+    {
+      "name": "Keir Starmer",
+      "faction": "staat",
+      "expect": "prime minister",
+      "hard": { "militaer": 62, "nuklear": 60, "daten": 55, "compute": 50, "kapital_override": 60 },
+      "note": "Nuklearmacht, ständiger Sitz im UN-Sicherheitsrat, City of London als Finanzknoten."
+    },
+    {
+      "name": "Luiz Inácio Lula da Silva",
+      "faction": "staat",
+      "expect": "president",
+      "hard": { "militaer": 40, "nuklear": 3, "daten": 45, "compute": 20, "kapital_override": 52 },
+      "note": "Amazonas als globaler Klimafaktor, Führungsrolle in BRICS und im Globalen Süden."
+    },
+    {
+      "name": "Volodymyr Zelenskyy",
+      "faction": "staat",
+      "expect": "president",
+      "hard": { "militaer": 48, "nuklear": 0, "daten": 30, "compute": 12, "kapital_override": 25 },
+      "note": "Kampferprobte Armee bei gleichzeitig hoher Abhängigkeit von externer Finanzierung – Machtprofil fast vollständig auf Narrativ und Bündnisse gestützt."
+    },
+
+    {
+      "name": "Elon Musk",
+      "faction": "tech",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 45, "nuklear": 0, "daten": 82, "compute": 88 },
+      "note": "Starlink als militärisch relevante Infrastruktur, X als Plattform mit direkter Reichweite, xAI-Rechencluster, SpaceX als Quasi-Monopol beim Orbitalstart."
+    },
+    {
+      "name": "Sam Altman",
+      "faction": "tech",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 12, "nuklear": 0, "daten": 78, "compute": 92 },
+      "note": "Steuert Verbreitung und Grenzen eines der meistgenutzten KI-Systeme sowie eines der größten Compute-Ausbauprogramme."
+    },
+    {
+      "name": "Jensen Huang",
+      "faction": "tech",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 30, "nuklear": 0, "daten": 45, "compute": 100 },
+      "note": "Nvidia liefert den Großteil der weltweiten KI-Trainingschips – Flaschenhals, durch den fast jedes große Modell muss."
+    },
+    {
+      "name": "Mark Zuckerberg",
+      "faction": "tech",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 5, "nuklear": 0, "daten": 98, "compute": 90 },
+      "note": "Verhaltensdaten von rund 3 Mrd Menschen über Facebook, Instagram und WhatsApp; algorithmische Kuratierung als Manipulationshebel."
+    },
+    {
+      "name": "Sundar Pichai",
+      "faction": "tech",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 10, "nuklear": 0, "daten": 97, "compute": 93 },
+      "note": "Suche, Android, YouTube und Werbe-Stack – Zugriff auf Such- und Standortdaten in fast jedem Land; eigene TPU-Flotte."
+    },
+    {
+      "name": "Satya Nadella",
+      "faction": "tech",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 35, "nuklear": 0, "daten": 85, "compute": 95 },
+      "note": "Azure als Cloud-Rückgrat für Behörden und Militär, Unternehmensdaten weltweit, größte KI-Rechenzentrumsflotte."
+    },
+    {
+      "name": "Demis Hassabis",
+      "faction": "tech",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 8, "nuklear": 0, "daten": 62, "compute": 88 },
+      "note": "Führt Google DeepMind; wissenschaftliche Durchbrüche (AlphaFold) als Machtform eigener Art."
+    },
+    {
+      "name": "Dario Amodei",
+      "faction": "tech",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 8, "nuklear": 0, "daten": 55, "compute": 80 },
+      "note": "Anthropic als einer der wenigen Frontier-Labs; überproportionaler Einfluss auf Sicherheits- und Regulierungsdebatten."
+    },
+    {
+      "name": "Tim Cook",
+      "faction": "tech",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 5, "nuklear": 0, "daten": 80, "compute": 70 },
+      "note": "Kontrolle über App Store und iOS-Gatekeeping; Lieferkettenmacht gegenüber China."
+    },
+    {
+      "name": "Jeff Bezos",
+      "faction": "tech",
+      "expect": "chairperson",
+      "hard": { "militaer": 25, "nuklear": 0, "daten": 88, "compute": 92 },
+      "note": "AWS als Infrastruktur eines Großteils des Webs inkl. Geheimdienst-Clouds; Eigentümer der Washington Post."
+    },
+    {
+      "name": "Larry Ellison",
+      "faction": "tech",
+      "expect": "chairperson",
+      "hard": { "militaer": 30, "nuklear": 0, "daten": 84, "compute": 78 },
+      "note": "Oracle hält Gesundheits-, Behörden- und Personendatenbanken in großem Umfang; enge Verflechtung mit Sicherheitsbehörden."
+    },
+    {
+      "name": "Zhang Yiming",
+      "faction": "tech",
+      "expect": "founder",
+      "hard": { "militaer": 3, "nuklear": 0, "daten": 92, "compute": 72 },
+      "note": "ByteDance/TikTok – der wirksamste Empfehlungsalgorithmus für junge Zielgruppen weltweit."
+    },
+    {
+      "name": "Ma Huateng",
+      "faction": "tech",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 3, "nuklear": 0, "daten": 90, "compute": 65 },
+      "note": "WeChat als Betriebssystem des chinesischen Alltags: Chat, Zahlung, Identität in einer App."
+    },
+    {
+      "name": "C. C. Wei",
+      "faction": "tech",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 40, "nuklear": 0, "daten": 20, "compute": 98 },
+      "note": "TSMC fertigt praktisch alle fortgeschrittenen Chips – der geopolitisch heikelste Engpass der Welt."
+    },
+
+    {
+      "name": "Larry Fink",
+      "faction": "kapital",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 5, "nuklear": 0, "daten": 60, "compute": 35, "kapital_override": 96 },
+      "note": "BlackRock verwaltet zweistellige Billionenbeträge und ist über Indexfonds Großaktionär fast jedes börsennotierten Konzerns."
+    },
+    {
+      "name": "Jerome Powell",
+      "faction": "kapital",
+      "expect": "chair",
+      "hard": { "militaer": 0, "nuklear": 0, "daten": 30, "compute": 10, "kapital_override": 94 },
+      "note": "Setzt den Preis des Weltleitgeldes: US-Zinsentscheidungen bewegen Staatshaushalte und Kryptomärkte gleichermaßen."
+    },
+    {
+      "name": "Christine Lagarde",
+      "faction": "kapital",
+      "expect": "president",
+      "hard": { "militaer": 0, "nuklear": 0, "daten": 28, "compute": 10, "kapital_override": 82 },
+      "note": "Geldpolitik für den Euroraum, treibende Kraft hinter dem digitalen Euro."
+    },
+    {
+      "name": "Jamie Dimon",
+      "faction": "kapital",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 2, "nuklear": 0, "daten": 55, "compute": 30, "kapital_override": 80 },
+      "note": "JPMorgan als systemrelevante Bank und Abwicklungsknoten des Dollarsystems."
+    },
+    {
+      "name": "Warren Buffett",
+      "faction": "kapital",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 2, "nuklear": 0, "daten": 25, "compute": 12 },
+      "note": "Berkshire kontrolliert Versicherer, Energie und Bahninfrastruktur – Machtform ist Eigentum an Realwirtschaft."
+    },
+    {
+      "name": "Bernard Arnault",
+      "faction": "kapital",
+      "expect": "chief executive officer",
+      "hard": { "militaer": 0, "nuklear": 0, "daten": 30, "compute": 8 },
+      "note": "LVMH als Statusmaschine; zusätzlich Medienbeteiligungen in Frankreich."
+    },
+
+    {
+      "name": "Rupert Murdoch",
+      "faction": "narrativ",
+      "expect": "chairperson",
+      "hard": { "militaer": 0, "nuklear": 0, "daten": 40, "compute": 5 },
+      "note": "Fox, WSJ, News Corp – jahrzehntelange Prägung des Rechtsdiskurses in den USA, UK und Australien."
+    },
+    {
+      "name": "Bill Gates",
+      "faction": "narrativ",
+      "expect": "founder",
+      "hard": { "militaer": 0, "nuklear": 0, "daten": 45, "compute": 25 },
+      "note": "Größte private Stiftung im Bereich globale Gesundheit – setzt de facto Prioritäten der WHO-Agenda mit."
+    },
+    {
+      "name": "Pope Leo XIV",
+      "faction": "narrativ",
+      "expect": "pope",
+      "hard": { "militaer": 0, "nuklear": 0, "daten": 20, "compute": 3 },
+      "note": "Moralische Autorität gegenüber rund 1,4 Mrd Katholiken, diplomatisches Netz in nahezu jedem Land."
+    },
+    {
+      "name": "Taylor Swift",
+      "faction": "narrativ",
+      "expect": "singer",
+      "hard": { "militaer": 0, "nuklear": 0, "daten": 35, "compute": 2 },
+      "note": "Kulturelle Mobilisierungskraft mit messbarem Effekt auf Wählerregistrierung – Gegenbeweis dazu, dass Macht immer institutionell ist."
+    }
+  ]
+}

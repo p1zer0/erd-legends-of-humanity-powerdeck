@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PowerDeck – Kartenvorschau</title>
+<style>
+/* Bewusst nur Dark Mode: das ist eine Spiel-Oberfläche, kein Dokument. */
+:root {
+  color-scheme: dark;
+  --surface-1: #141b26;
+  --surface-2: #1b2432;
+  --plane: #0d1219;
+  --text-primary: #ffffff;
+  --text-secondary: #c3c2b7;
+  --text-muted: #898781;
+  --border: rgba(255, 255, 255, 0.10);
+  --grid: #2c333d;
+
+  /* Diverging: politisches Spektrum. Blau/Rot als Pole, Grau als Mitte.
+     Der graue Mittelpunkt liegt bewusst ausserhalb des kategorialen
+     Helligkeitsbands - er soll "nichts" bedeuten. Die CVD-Trennung
+     Rot<->Grau wurde geprueft (ΔE 9.2 deutan, Ziel >= 8). */
+  --spec-links: #3987e5;
+  --spec-mitte: #b0aea5;
+  --spec-rechts: #e66767;
+  --spec-staat: #9085e9;
+
+  --bar: #3987e5;
+  --bar-track: #26303d;
+  --accent: #199e70;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 2rem 1.5rem 4rem;
+  background: var(--plane);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.wrap { max-width: 1400px; margin: 0 auto; }
+
+header h1 { font-size: 1.75rem; margin: 0 0 .25rem; letter-spacing: -0.01em; }
+header p { margin: 0; color: var(--text-secondary); }
+
+.toolbar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem;
+  margin: 1.5rem 0 2rem; padding: .9rem 1.1rem;
+  background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px;
+}
+.legend { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+.legend-item { display: flex; align-items: center; gap: .45rem; color: var(--text-secondary); font-size: .85rem; }
+.swatch { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+.toolbar button, .toolbar select {
+  background: var(--surface-2); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: .45rem .8rem; font: inherit; font-size: .85rem; cursor: pointer;
+}
+.toolbar button:hover { border-color: var(--text-muted); }
+.toolbar .spacer { margin-left: auto; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 1.25rem; }
+
+.card {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.15rem 1.25rem 1.25rem;
+  display: flex; flex-direction: column; gap: .9rem;
+}
+.card-head { display: flex; align-items: flex-start; gap: 1rem; }
+.card-head h2 { margin: 0; font-size: 1.15rem; letter-spacing: -0.01em; }
+.chip {
+  display: inline-block; margin-top: .3rem; padding: .1rem .5rem;
+  border: 1px solid var(--border); border-radius: 999px;
+  font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted);
+}
+.macht { margin-left: auto; text-align: right; flex: none; }
+.macht .num { font-size: 2.1rem; font-weight: 650; line-height: 1; display: block; }
+.macht .lbl { font-size: .65rem; text-transform: uppercase; letter-spacing: .09em; color: var(--text-muted); }
+.desc { margin: 0; color: var(--text-secondary); font-size: .85rem; }
+
+.stats { display: grid; gap: .3rem; }
+.stat { display: grid; grid-template-columns: 6.5rem 1fr 2rem; align-items: center; gap: .6rem; }
+.stat-name { font-size: .78rem; color: var(--text-secondary); }
+.stat-track { height: 7px; background: var(--bar-track); border-radius: 4px; overflow: hidden; }
+.stat-fill { height: 100%; background: var(--bar); border-radius: 0 4px 4px 0; }
+.stat-val { font-size: .78rem; color: var(--text-secondary); text-align: right; font-variant-numeric: tabular-nums; }
+.stat:hover .stat-name, .stat:hover .stat-val { color: var(--text-primary); }
+
+.block-label {
+  font-size: .68rem; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text-muted); margin-bottom: .4rem;
+}
+.spectrum { display: flex; height: 22px; border-radius: 5px; overflow: hidden; gap: 2px; background: var(--surface-2); }
+.seg { display: flex; align-items: center; justify-content: center; font-size: .7rem;
+       color: #0d1219; font-weight: 600; min-width: 2px; }
+.seg:first-child { border-radius: 5px 0 0 5px; }
+.seg:last-child { border-radius: 0 5px 5px 0; }
+.coverage-note { font-size: .72rem; color: var(--text-muted); margin-top: .35rem; }
+.spark { display: block; width: 100%; height: 44px; }
+.warn {
+  font-size: .75rem; color: #fab219;
+  border-left: 2px solid #fab219; padding-left: .6rem;
+}
+.sources { display: flex; flex-wrap: wrap; gap: .8rem; font-size: .75rem; }
+.sources a { color: var(--text-muted); }
+.sources a:hover { color: var(--text-primary); }
+
+table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+th, td { padding: .45rem .6rem; text-align: right; border-bottom: 1px solid var(--grid); font-variant-numeric: tabular-nums; }
+th:first-child, td:first-child { text-align: left; font-variant-numeric: normal; }
+th { color: var(--text-muted); font-weight: 500; text-transform: uppercase; font-size: .68rem; letter-spacing: .06em; }
+.table-wrap { overflow-x: auto; background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; }
+.hidden { display: none; }
+
+#tip {
+  position: fixed; pointer-events: none; opacity: 0; transition: opacity .12s;
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px;
+  padding: .45rem .65rem; font-size: .78rem; max-width: 260px; z-index: 50;
+  box-shadow: 0 8px 24px rgba(0,0,0,.45);
+}
+#loader { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>PowerDeck</h1>
+    <p id="sub">cards.json wird geladen …</p>
+  </header>
+
+  <div id="loader" class="hidden">
+    <p><strong>cards.json konnte nicht geladen werden.</strong> Browser blockieren Datei-Zugriffe
+      per <code>file://</code>. Entweder einen kleinen Server starten:</p>
+    <p><code>make serve</code> → <code>http://localhost:8000</code></p>
+    <p>… oder die Datei hier auswählen: <input type="file" id="picker" accept=".json"></p>
+  </div>
+
+  <div class="toolbar hidden" id="toolbar">
+    <div class="legend" id="legend"></div>
+    <span class="spacer"></span>
+    <select id="sort">
+      <option value="macht">nach Macht</option>
+      <option value="narrativ">nach Narrativ</option>
+      <option value="polarisierung">nach Polarisierung</option>
+      <option value="chaos">nach Chaos</option>
+      <option value="name">nach Name</option>
+    </select>
+    <button id="toggle">Tabelle</button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="table-wrap hidden" id="table"></div>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const SPECTRUM = [
+  { key: "links",     label: "links",     color: "var(--spec-links)"  },
+  { key: "mitte",     label: "Mitte",     color: "var(--spec-mitte)"  },
+  { key: "rechts",    label: "rechts",    color: "var(--spec-rechts)" },
+  { key: "staatsnah", label: "staatsnah", color: "var(--spec-staat)"  },
+];
+
+const tip = document.getElementById("tip");
+function showTip(e, html) {
+  tip.innerHTML = html;
+  tip.style.opacity = "1";
+  const pad = 14;
+  const x = Math.min(e.clientX + pad, innerWidth - tip.offsetWidth - 8);
+  const y = Math.min(e.clientY + pad, innerHeight - tip.offsetHeight - 8);
+  tip.style.left = x + "px";
+  tip.style.top = y + "px";
+}
+function hideTip() { tip.style.opacity = "0"; }
+
+function el(tag, cls, text) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text != null) n.textContent = text;
+  return n;
+}
+
+function sparkline(values, endDate) {
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(NS, "svg");
+  svg.setAttribute("class", "spark");
+  svg.setAttribute("preserveAspectRatio", "none");
+  if (!values.length) return svg;
+
+  const W = 300, H = 44, pad = 3;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const max = Math.max(...values), min = Math.min(...values);
+  const span = max - min || 1;
+  const x = i => (values.length === 1 ? W / 2 : (i / (values.length - 1)) * W);
+  const y = v => H - pad - ((v - min) / span) * (H - 2 * pad);
+
+  const area = document.createElementNS(NS, "path");
+  area.setAttribute("d",
+    `M0,${H} ` + values.map((v, i) => `L${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ") + ` L${W},${H} Z`);
+  area.setAttribute("fill", "rgba(25,158,112,0.13)");
+  svg.appendChild(area);
+
+  const line = document.createElementNS(NS, "path");
+  line.setAttribute("d", values.map((v, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" "));
+  line.setAttribute("fill", "none");
+  line.setAttribute("stroke", "var(--accent)");
+  line.setAttribute("stroke-width", "2");
+  line.setAttribute("vector-effect", "non-scaling-stroke");
+  svg.appendChild(line);
+
+  // Crosshair: der naechstgelegene Tag wird beim Ueberfahren gezeigt.
+  const marker = document.createElementNS(NS, "circle");
+  marker.setAttribute("r", "3.5");
+  marker.setAttribute("fill", "var(--accent)");
+  marker.setAttribute("stroke", "var(--surface-1)");
+  marker.setAttribute("stroke-width", "2");
+  marker.setAttribute("opacity", "0");
+  svg.appendChild(marker);
+
+  svg.addEventListener("mousemove", e => {
+    const box = svg.getBoundingClientRect();
+    const i = Math.round(((e.clientX - box.left) / box.width) * (values.length - 1));
+    const idx = Math.max(0, Math.min(values.length - 1, i));
+    marker.setAttribute("cx", x(idx));
+    marker.setAttribute("cy", y(values[idx]));
+    marker.setAttribute("opacity", "1");
+    const d = new Date(endDate);
+    d.setDate(d.getDate() - (values.length - 1 - idx));
+    showTip(e, `<strong>${values[idx].toLocaleString("de-DE")}</strong> Aufrufe<br>
+                <span style="color:var(--text-muted)">${d.toLocaleDateString("de-DE")}</span>`);
+  });
+  svg.addEventListener("mouseleave", () => { marker.setAttribute("opacity", "0"); hideTip(); });
+  return svg;
+}
+
+function buildCard(card, legende) {
+  const node = el("article", "card");
+
+  const head = el("div", "card-head");
+  const titleBox = el("div");
+  titleBox.appendChild(el("h2", null, card.name));
+  titleBox.appendChild(el("span", "chip", card.faction));
+  head.appendChild(titleBox);
+  const macht = el("div", "macht");
+  macht.appendChild(el("span", "num", card.macht));
+  macht.appendChild(el("span", "lbl", "Macht"));
+  head.appendChild(macht);
+  node.appendChild(head);
+
+  if (card.beschreibung) node.appendChild(el("p", "desc", card.beschreibung));
+
+  const stats = el("div", "stats");
+  for (const [key, val] of Object.entries(card.stats)) {
+    const row = el("div", "stat");
+    row.appendChild(el("span", "stat-name", key));
+    const track = el("span", "stat-track");
+    const fill = el("span", "stat-fill");
+    fill.style.width = val + "%";
+    track.appendChild(fill);
+    row.appendChild(track);
+    row.appendChild(el("span", "stat-val", val));
+    row.addEventListener("mousemove", e =>
+      showTip(e, `<strong>${key} ${val}</strong><br><span style="color:var(--text-secondary)">${legende[key] || ""}</span>`));
+    row.addEventListener("mouseleave", hideTip);
+    stats.appendChild(row);
+  }
+  node.appendChild(stats);
+
+  const cov = card.berichterstattung;
+  if (cov && cov.artikel_mit_bias_rating > 0) {
+    const box = el("div");
+    box.appendChild(el("div", "block-label", "Wer berichtet über diese Person"));
+    const bar = el("div", "spectrum");
+    for (const s of SPECTRUM) {
+      const pct = cov.verteilung_prozent[s.key] || 0;
+      if (!pct) continue;
+      const seg = el("div", "seg", pct >= 12 ? pct + "%" : "");
+      seg.style.flex = pct;
+      seg.style.background = s.color;
+      seg.addEventListener("mousemove", e =>
+        showTip(e, `<strong>${s.label}: ${pct}%</strong><br>
+          <span style="color:var(--text-muted)">Anteil an ${cov.artikel_mit_bias_rating} eingeordneten Artikeln</span>`));
+      seg.addEventListener("mouseleave", hideTip);
+      bar.appendChild(seg);
+    }
+    box.appendChild(bar);
+    const states = Object.entries(cov.staatsmedien || {});
+    box.appendChild(el("div", "coverage-note",
+      `${cov.artikel_mit_bias_rating} von ${cov.artikel_ausgewertet} Artikeln eingeordnet` +
+      (states.length ? ` · Staatsmedien: ${states.map(([k, v]) => `${k} (${v})`).join(", ")}` : "")));
+    node.appendChild(box);
+  }
+
+  if (card.aufmerksamkeit_30d && card.aufmerksamkeit_30d.length) {
+    const box = el("div");
+    box.appendChild(el("div", "block-label", "Aufmerksamkeit · Wikipedia-Aufrufe 30 Tage"));
+    box.appendChild(sparkline(card.aufmerksamkeit_30d, window.__endDate));
+    node.appendChild(box);
+  }
+
+  for (const w of card.warnungen || []) node.appendChild(el("div", "warn", w));
+
+  const src = el("div", "sources");
+  const q = card.quellen || {};
+  if (q.wikipedia) { const a = el("a", null, "Wikipedia"); a.href = q.wikipedia; a.target = "_blank"; a.rel = "noopener"; src.appendChild(a); }
+  if (q.wikidata) { const a = el("a", null, "Wikidata"); a.href = q.wikidata; a.target = "_blank"; a.rel = "noopener"; src.appendChild(a); }
+  if (q.bild_lizenz) { const a = el("a", null, "Bildlizenz"); a.href = q.bild_lizenz; a.target = "_blank"; a.rel = "noopener"; src.appendChild(a); }
+  if (q.vermoegen_usd) src.appendChild(el("span", null,
+    `Vermögen ${(q.vermoegen_usd / 1e9).toFixed(1)} Mrd $${q.vermoegen_stand ? " (" + q.vermoegen_stand + ")" : ""}`));
+  node.appendChild(src);
+
+  return node;
+}
+
+function buildTable(cards) {
+  const keys = Object.keys(cards[0].stats);
+  const table = el("table");
+  const head = el("tr");
+  head.appendChild(el("th", null, "Person"));
+  head.appendChild(el("th", null, "Macht"));
+  for (const k of keys) head.appendChild(el("th", null, k));
+  head.appendChild(el("th", null, "links/Mitte/rechts %"));
+  table.appendChild(head);
+  for (const c of cards) {
+    const tr = el("tr");
+    tr.appendChild(el("td", null, c.name));
+    tr.appendChild(el("td", null, c.macht));
+    for (const k of keys) tr.appendChild(el("td", null, c.stats[k]));
+    const v = (c.berichterstattung || {}).verteilung_prozent || {};
+    tr.appendChild(el("td", null, `${v.links || 0}/${v.mitte || 0}/${v.rechts || 0}`));
+    table.appendChild(tr);
+  }
+  return table;
+}
+
+function render(data) {
+  // Mittagszeit statt Mitternacht, sonst kippt das Datum je nach Zeitzone auf den Vortag.
+  const stand = new Date(data.generiert_am + "T12:00:00");
+  window.__endDate = new Date(stand);
+  window.__endDate.setDate(window.__endDate.getDate() - 1);
+
+  document.getElementById("sub").textContent =
+    `${data.kartenzahl} Karten · Stand ${stand.toLocaleDateString("de-DE")} · ` +
+    `Quellen: ${(data.datenquellen || []).length} offene Datensätze`;
+  document.getElementById("loader").classList.add("hidden");
+  document.getElementById("toolbar").classList.remove("hidden");
+
+  const legend = document.getElementById("legend");
+  legend.appendChild(el("span", "legend-item", "Berichterstattung:"));
+  for (const s of SPECTRUM) {
+    const item = el("span", "legend-item");
+    const sw = el("span", "swatch");
+    sw.style.background = s.color;
+    item.appendChild(sw);
+    item.appendChild(el("span", null, s.label));
+    legend.appendChild(item);
+  }
+
+  const grid = document.getElementById("grid");
+  const tableWrap = document.getElementById("table");
+
+  function draw() {
+    const mode = document.getElementById("sort").value;
+    const cards = [...data.cards].sort((a, b) =>
+      mode === "name" ? a.name.localeCompare(b.name)
+      : mode === "macht" ? b.macht - a.macht
+      : b.stats[mode] - a.stats[mode]);
+    grid.replaceChildren(...cards.map(c => buildCard(c, data.legende || {})));
+    tableWrap.replaceChildren(buildTable(cards));
+  }
+  document.getElementById("sort").addEventListener("change", draw);
+  document.getElementById("toggle").addEventListener("click", e => {
+    const showTable = grid.classList.toggle("hidden");
+    tableWrap.classList.toggle("hidden", !showTable);
+    e.target.textContent = showTable ? "Karten" : "Tabelle";
+  });
+  draw();
+}
+
+fetch("cards.json")
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(render)
+  .catch(() => {
+    document.getElementById("sub").textContent = "";
+    document.getElementById("loader").classList.remove("hidden");
+    document.getElementById("picker").addEventListener("change", ev => {
+      const file = ev.target.files[0];
+      if (file) file.text().then(t => render(JSON.parse(t)));
+    });
+  });
+</script>
+</body>
+</html>
