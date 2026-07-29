@@ -10,7 +10,7 @@ Der Loop tut genau das. Mit einer Grenze, die bewusst gezogen ist.
 **Der Loop schlägt vor. Ein Mensch entscheidet.**
 
 Das ist keine Bequemlichkeit, sondern die Bedingung dafür, dass das Projekt sein
-Kernversprechen halten kann. PowerDeck behauptet: *jede Zahl hat eine Quelle*.
+Kernversprechen halten kann. ERD Legends of Humanity – PowerDeck behauptet: *jede Zahl hat eine Quelle*.
 Genau das ist der einzige Unterschied zu allen anderen, die auch erklären, wer
 die Welt lenkt.
 

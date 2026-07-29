@@ -18,7 +18,7 @@ from .rules import Zug
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(
         prog="powerdeck play",
-        description="Eine Partie PowerDeck im Terminal.")
+        description="Eine Partie ERD Legends of Humanity im Terminal.")
     parser.add_argument("--cards", default=DEFAULT_OUT, help="Pfad zu cards.json")
     parser.add_argument("--seed", type=int, default=None,
                         help="Seed für einen reproduzierbaren Verlauf")
@@ -103,7 +103,8 @@ def main(argv=None):
                               "Bot B" if args.auto else "Bot", wuerfel=wuerfel)
     partie = battle.Partie(deck_a, deck_b, seed=seed, runden=args.runden)
 
-    print(f"PowerDeck – Seed {seed}, {args.runden} Runden\n")
+    print(f"ERD Legends of Humanity – PowerDeck\n"
+          f"Seed {seed}, {args.runden} Runden\n")
     for deck in (deck_a, deck_b):
         print(f"{deck.name} (Machtkosten {deck.kosten}):")
         for karte in deck.karten:

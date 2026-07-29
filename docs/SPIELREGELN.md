@@ -1,4 +1,4 @@
-# Spielregeln
+# ERD Legends of Humanity – PowerDeck · Spielregeln
 
 Stand: v1, umgesetzt in `src/powerdeck/game/rules.py`. Die Konstanten dort sind
 die Stellschrauben — jede Zahl in diesem Dokument steht auch im Code.

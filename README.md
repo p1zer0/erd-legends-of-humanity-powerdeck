@@ -1,4 +1,4 @@
-# PowerDeck
+# ERD Legends of Humanity – PowerDeck
 
 Ein Kartenspiel über die Menschen und Organisationen, die bestimmen, wie es auf
 der Welt weitergeht — mit Werten, die aus offenen Quellen berechnet statt

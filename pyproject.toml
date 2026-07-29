@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "powerdeck"
 version = "1.0.0"
-description = "Machtwerte für das ERD-Kartenspiel aus offenen Datenquellen"
+description = "ERD Legends of Humanity – PowerDeck: Kartenspiel über Macht, mit Werten aus offenen Datenquellen"
 readme = "README.md"
 requires-python = ">=3.9"
 license = { file = "LICENSE" }
