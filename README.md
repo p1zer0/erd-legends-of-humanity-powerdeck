@@ -1,147 +1,150 @@
 # PowerDeck
 
-Machtwerte für ein Kartenspiel — berechnet aus offenen Datenquellen statt behauptet.
+Ein Kartenspiel über die Menschen und Organisationen, die bestimmen, wie es auf
+der Welt weitergeht — mit Werten, die aus offenen Quellen berechnet statt
+behauptet werden.
 
-Aus einer Liste realer Personen entsteht eine `cards.json` mit acht Werten pro Karte.
-Vier davon werden täglich live aus Wikidata, Wikipedia und GDELT geholt, vier sind
-redaktionell und in `data/roster.json` begründet.
+Man spielt sie gegeneinander aus und lernt dabei, woraus Macht tatsächlich
+besteht: Geld, Waffen, Daten, Rechenleistung, Erzählung. **Es gibt keinen
+Gesamtwert, der eine Karte besser macht als eine andere.** Wer nur eine Form von
+Macht hat, verliert gegen die richtige Antwort.
 
-Kein API-Key, keine Laufzeitabhängigkeiten — nur die Python-Standardbibliothek.
+Die Gebühren aus dem Betrieb gehen an Friedens- und Nachhaltigkeitsprojekte, mit
+veröffentlichter Liste. Warum, in welcher Reihenfolge und mit welchen Auflagen
+steht in [docs/VISION.md](docs/VISION.md).
 
 ```bash
-make deck        # volles Deck (~25 min, GDELT drosselt)
-make deck-fast   # in ~1 min, ohne Polarisierung
-make card N=Musk # eine Karte testen
-make test        # Testsuite, braucht kein Netz
-make serve       # Vorschau auf http://localhost:8000
+make deck        # Kartendaten aus offenen Quellen bauen (~25 min)
+make deck-fast   # dasselbe ohne GDELT (~1 min)
+make play        # eine Partie im Terminal
+make watch       # Bot gegen Bot, nur zuschauen
+make loop        # nach Verbesserungen suchen
+make test        # 86 Tests, ohne Netz
+make serve       # Kartenvorschau auf localhost:8000
 ```
+
+Kein API-Key, keine Laufzeitabhängigkeit — nur die Python-Standardbibliothek.
 
 ## Die acht Werte
 
-| Wert | Woher | Bedeutung |
+| Wert | Rolle | Woher |
 |---|---|---|
-| **kapital** | Wikidata `P2218`, logarithmisch (1 Mrd $ → 1, 400 Mrd $ → 100) | Verfügungsgewalt über Geld |
-| **militaer** | `data/roster.json` | Kommandogewalt über Streitkräfte |
-| **nuklear** | `data/roster.json` | Zugriff auf Kernwaffen |
-| **daten** | `data/roster.json` | Personenbezogene Daten in großem Maßstab |
-| **compute** | `data/roster.json` | Rechenleistung, Chips, KI-Modelle |
-| **narrativ** | GDELT-Artikelvolumen + Wikipedia-Aufrufe, 30 Tage | Medienpräsenz |
-| **polarisierung** | GDELT-Quellen × `data/bias_sources.json` | Wie einseitig berichtet wird |
-| **chaos** | Schwankung der Aufrufe (Variationskoeffizient + größter Ausschlag) | Unberechenbarkeit der Aufmerksamkeit |
+| **kapital** | Angriff | Wikidata `P2218`, logarithmisch |
+| **militaer** | Angriff | `data/roster.json`, redaktionell und begründet |
+| **daten** | Angriff | `data/roster.json` |
+| **narrativ** | Angriff | GDELT-Artikelvolumen + Wikipedia-Aufrufe, 30 Tage |
+| **nuklear** | Eskalation | `data/roster.json` |
+| **compute** | Eskalation | `data/roster.json` |
+| **polarisierung** | Verteidigung | GDELT-Quellen × `data/bias_sources.json` |
+| **chaos** | Wildcard | Schwankung der Wikipedia-Aufrufe |
 
-`macht` ist die gewichtete Summe. Die Gewichte stehen in `src/powerdeck/config.py`
-und liegen jeder `cards.json` bei — wer die Rechnung nachvollziehen will, kann es.
+Dazu `macht`, die gewichtete Summe — sie ist der **Preis der Karte beim
+Deckbau**, nicht ihre Stärke im Kampf. Ein Deck aus lauter Spitzenkarten ist
+unbezahlbar, also müssen günstige Karten Runden gewinnen können. Dafür gibt es
+das Konter-Rad:
 
-**Staatsakteure bekommen `kapital_override`.** Das Privatvermögen eines Präsidenten
-sagt nichts über die fiskalische Macht, die er tatsächlich ausübt.
+```
+     Kapital ◄────────── Narrativ        Kapital  schlägt Militär
+        │                    ▲           Militär  schlägt Daten
+        ▼                    │           Daten    schlägt Narrativ
+     Militär ──────────►  Daten          Narrativ schlägt Kapital
+```
+
+Vollständig in [docs/SPIELREGELN.md](docs/SPIELREGELN.md).
+
+## Fünf Fraktionen
+
+`staat` · `tech` · `kapital` · `narrativ` · **`zivil`**
+
+Die fünfte ist die, um die es eigentlich geht: Organisationen mit Wirkung, aber
+ohne Amt, Kapital oder Waffen — Amnesty, Ärzte ohne Grenzen, Greenpeace, ICAN,
+die Wikimedia Foundation. Schwach in fast jeder Dimension, dafür stark in
+Narrativ und Chaos, und sie dämpfen gegnerische Eskalation.
+
+Das ist der Ort, an dem Non-Profits im Spiel sichtbar werden — als spielbare
+Karten, nicht als Banner. Und die zweite Aussage des Spiels: **Macht ist nicht
+dasselbe wie Wirkung.**
 
 ## Warum nicht Ground News
 
 Ground News hat keine öffentliche API. Was das Produkt ausmacht, ist eine Schicht
-über frei zugänglichen Daten: Artikel sammeln, Quellen nach politischer Ausrichtung
-einordnen, Verteilung zeigen. Genau das macht `scoring.coverage_breakdown()` — mit
-GDELT als Artikelquelle und `data/bias_sources.json` als Einordnung, die im Repo
-liegt, versionierbar und begründbar ist.
-
-Pro Karte entsteht daraus:
+über frei zugänglichen Daten: Artikel sammeln, Quellen nach Ausrichtung
+einordnen, Verteilung zeigen. Genau das macht `pipeline/scoring.py` — mit GDELT
+als Artikelquelle und `data/bias_sources.json` als Einordnung, die im Repo liegt,
+versionierbar und diskutierbar ist.
 
 ```json
 "berichterstattung": {
   "verteilung_prozent": { "links": 30, "mitte": 55, "rechts": 15, "staatsnah": 4 },
   "artikel_ausgewertet": 250,
-  "artikel_mit_bias_rating": 50,
   "abdeckung_prozent": 20,
-  "bias_mittelwert": 0.22,
-  "bias_streuung": 0.8,
   "staatsmedien": { "Russland": 3 }
 }
 ```
 
-Das ist der Aufklärungsteil: Spieler sehen nicht nur, *dass* jemand mächtig ist,
-sondern *wer über ihn spricht* — und dass staatsnahe Medien eine eigene Kategorie sind.
-
-`abdeckung_prozent` sagt, wie belastbar die Zahl ist. Bei einem globalen
-GDELT-Sample sind das oft nur 20–30 %, weil viele Regionalmedien nicht in der
-Tabelle stehen. Die Spektrum-Anteile beziehen sich deshalb auf die eingeordneten
-Artikel — sonst sähe jede Karte künstlich ausgewogen aus.
-
-## Werte sind relativ zum Deck
-
-`narrativ`, `polarisierung` und `chaos` werden über das gesamte Deck normalisiert.
-Zwei Konsequenzen:
-
-- Ein Einzellauf mit `--only` liefert für diese drei immer 50. Das ist kein Fehler,
-  sondern die ehrliche Antwort: ohne Vergleich gibt es keine Relation.
-- Kommen Karten dazu, verschieben sich die Werte der anderen leicht. Für ein Spiel
-  über Macht ist das genau richtig — Macht ist ein Verhältnis, kein Absolutwert.
-
-## Das Deck sagt Bescheid, wenn es veraltet
-
-Jede Person hat im Roster ein Feld `expect` mit einem Stichwort ihrer Rolle. Der
-Builder prüft gegen Wikidata (`P39` ohne Enddatum, `P169`, Kurzbeschreibung) und
-zusätzlich auf ein Todesdatum (`P570`). Abweichungen erscheinen am Ende des Laufs.
-
-Beim ersten Lauf hat das sofort gegriffen: Ali Khamenei ist laut Wikidata am
-28.02.2026 gestorben, seit dem 08.03.2026 ist Mojtaba Khamenei im Amt. Der Roster
-wurde korrigiert. Ein Deck über Machthaber, das die Welt von gestern zeigt, wäre
-das Gegenteil von Aufklärung — deshalb sind diese Warnungen kein Rauschen.
+`abdeckung_prozent` sagt, wie belastbar die Zahl ist. Die Spektrum-Anteile
+beziehen sich auf die eingeordneten Artikel — sonst sähe jede Karte künstlich
+ausgewogen aus.
 
 ## Architektur
 
 ```
 src/powerdeck/
-├── config.py         Pfade, Gewichte, Cache-Zeiten – alle Stellschrauben
-├── http.py           HTTP + Plattencache + SSL-Fallback
-├── scoring.py        reine Rechenschicht: rein Daten, raus Zahlen
-├── deck.py           Orchestrierung: collect → finalize
-├── cli.py            Kommandozeile
-└── sources/          je Datenquelle ein Modul – alles Netzabhängige lebt hier
-    ├── wikidata.py
-    ├── wikimedia.py
-    └── gdelt.py
-
-data/                 gepflegte Eingaben: roster.json, bias_sources.json
-public/               was ausgeliefert wird: index.html + cards.json
-tests/                40 Tests, ohne Netz lauffähig
-docs/ROADMAP.md       Ausbauwege
+├── pipeline/     Daten: sources · scoring · build     → public/cards.json
+├── game/         Regeln: cards · rules · battle · bot
+└── loop/         Verbesserungen: tasks · proposals
 ```
 
-Die Trennung hat einen Grund: `scoring.py` enthält alle Entscheidungen darüber,
-was Macht bedeutet, und ist deshalb vollständig testbar. `sources/` enthält alles,
-was schiefgehen kann, und darf ausfallen, ohne den Lauf zu kippen.
+`game/` importiert nichts aus `pipeline/` außer dem Pfad zur `cards.json`. Es
+kennt weder Wikidata noch GDELT und geht nie ins Netz. Das Spiel läuft, wenn
+jede Datenquelle ausfällt, und die Regeln sind ohne Netz testbar.
 
-## Cache und abgebrochene Läufe
+Der ganze Partieverlauf hängt an einem Seed — gleiche Züge plus gleicher Seed
+ergeben zwingend dasselbe Ergebnis. Sobald eine Partie über Werte entscheidet,
+muss sie nachrechenbar sein. Details in [docs/ARCHITEKTUR.md](docs/ARCHITEKTUR.md).
 
-Alle Antworten landen in `.cache/` (Wikidata 7 Tage, QIDs 30 Tage, Pageviews und
-GDELT 20 Stunden). Fehlgeschlagene Abrufe werden **nicht** gecacht — ein zweiter
-Lauf holt deshalb genau die fehlenden Personen nach und nimmt den Rest aus dem
-Cache. GDELT drosselt unregelmäßig; zweimal laufen zu lassen ist die normale
-Antwort darauf, nicht die Ausnahme. Der nächtliche Workflow macht es genauso.
+## Der Verbesserungs-Loop
 
-Cache verwerfen: `make clean-cache`.
+`make loop` sucht Lücken und schreibt Vorschläge nach `proposals/` — welche
+Medien noch nicht eingeordnet sind, welche stark nachgeschlagenen Personen im
+Deck fehlen, welche Karten die Welt von gestern zeigen. Ein Workflow lässt ihn
+wöchentlich laufen und öffnet einen Pull Request.
 
-## Rechtliches, bevor es teuer wird
+**Der Loop schlägt vor, ein Mensch entscheidet.** Änderungen an `data/roster.json`
+sind prüfpflichtig und lassen sich ohne ausdrückliche Bestätigung nicht
+übernehmen — durchgesetzt im Code, nicht nur in der Doku. Begründung und die
+Stufen, über die mehr Autonomie verdient wird, in [docs/AGENTEN.md](docs/AGENTEN.md).
 
-- **Wikipedia-Texte** (Feld `steckbrief`) stehen unter CC BY-SA 4.0: Namensnennung
-  und Link zum Artikel sind Pflicht, `quellen.wikipedia` liefert beides.
-  Wikidata-Fakten selbst sind CC0, also frei.
-- **Bilder sind der Stolperstein.** `quellen.bild` ist nur ein Link auf Wikimedia
-  Commons; jede Datei hat ihre eigene Lizenz. `quellen.bild_lizenz` führt auf die
-  Dateiseite mit den Bedingungen. Für ein kommerzielles Spiel ist der sichere Weg:
-  eigene Illustrationen. Fotos lebender Personen sind in Deutschland zusätzlich
-  über das Recht am eigenen Bild (KUG § 22) geschützt — unabhängig von der Lizenz.
-- **Personendarstellung**: Jeder Wert ist entweder belegt oder als redaktionelle
-  Einschätzung gekennzeichnet (`redaktionelle_notiz`). Das ist der Unterschied
-  zwischen Aufklärung und Rufschädigung. Wer eine Zahl ändert, ändert die
-  Begründung mit.
+## Das Deck sagt Bescheid, wenn es veraltet
 
-## Weiterbauen
+Jede Person hat ein Feld `expect` mit einem Stichwort ihrer Rolle. Der Builder
+prüft gegen Wikidata und meldet Abweichungen und Todesdaten.
 
-`docs/ROADMAP.md` listet neun Ausbauwege nach Aufwand sortiert — von der
-Bias-Tabelle verbreitern (klein, wirkt sofort) über den Beziehungsgraphen aus
-Wikidata (neue Spielmechanik) bis zur on-chain verankerten Kartenintegrität.
+Beim ersten Lauf hat das sofort gegriffen: Ali Khamenei ist laut Wikidata am
+28.02.2026 gestorben, seit dem 08.03.2026 ist Mojtaba Khamenei im Amt. Ein Deck
+über Machthaber, das Amtswechsel verschläft, wäre das Gegenteil von Aufklärung.
+
+## Rechtliches in einem Absatz
+
+Wikidata-Fakten sind CC0, Wikipedia-Texte CC BY-SA 4.0 mit Namensnennung.
+**Bilder sind der Stolperstein** — Dateilizenz und Recht am eigenen Bild sind
+zwei getrennte Hürden, für ein kommerzielles Spiel führt der sichere Weg über
+eigene Illustrationen. MiCA ist seit dem 1. Juli 2026 voll scharf, deshalb steht
+der Token am Ende der Reihenfolge und nicht am Anfang. Vollständig in
+[docs/RECHTLICHES.md](docs/RECHTLICHES.md).
+
+## Dokumentation
+
+| Datei | Inhalt |
+|---|---|
+| [VISION.md](docs/VISION.md) | Was das Spiel will, in welchen Phasen, und was es nicht ist |
+| [SPIELREGELN.md](docs/SPIELREGELN.md) | Regeln, Konter-Rad, Eskalation, Stellschrauben |
+| [ARCHITEKTUR.md](docs/ARCHITEKTUR.md) | Schichten, Grenzen, Entscheidungen im Rückblick |
+| [AGENTEN.md](docs/AGENTEN.md) | Der Verbesserungs-Loop und seine Leitplanken |
+| [RECHTLICHES.md](docs/RECHTLICHES.md) | MiCA, Glücksspiel, Persönlichkeitsrecht, Lizenzen |
+| [ROADMAP.md](docs/ROADMAP.md) | Neun Ausbauwege nach Aufwand |
 
 ## Lizenz
 
-MIT für den Code. Die erzeugten Daten stehen unter den Bedingungen ihrer Quellen —
-siehe `LICENSE`.
+MIT für den Code. Die erzeugten Daten stehen unter den Bedingungen ihrer
+Quellen — siehe [LICENSE](LICENSE).

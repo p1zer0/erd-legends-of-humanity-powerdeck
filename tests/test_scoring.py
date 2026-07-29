@@ -2,8 +2,8 @@
 
 import unittest
 
-from powerdeck import scoring
-from powerdeck.config import WEIGHTS
+from powerdeck.pipeline import scoring
+from powerdeck.pipeline.config import WEIGHTS
 
 BIAS = {"nytimes.com": -1.0, "cnn.com": -1.0, "foxnews.com": 2.0,
         "reuters.com": 0.0, "apnews.com": 0.0}

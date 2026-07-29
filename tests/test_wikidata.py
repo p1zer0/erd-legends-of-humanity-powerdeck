@@ -4,7 +4,7 @@ import json
 import unittest
 from pathlib import Path
 
-from powerdeck.sources import wikidata
+from powerdeck.pipeline.sources import wikidata
 
 FIXTURE = Path(__file__).parent / "fixtures" / "entity_example.json"
 

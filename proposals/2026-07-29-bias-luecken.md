@@ -1,0 +1,62 @@
+# 25 häufige Medien sind noch nicht eingeordnet
+
+**Aufgabe:** `bias-luecken`  
+**Datei:** `data/bias_sources.json`  
+**Erzeugt:** 2026-07-29
+
+## Begründung
+
+In den zwischengespeicherten GDELT-Antworten tauchen 242 Domains auf, die weder in der Bias-Tabelle noch in der Staatsmedien-Liste stehen. Die 25 häufigsten decken 798 von 1979 dieser Nennungen ab (40 %).
+
+Jede eingeordnete Domain erhöht `abdeckung_prozent` auf allen Karten gleichzeitig. Der Wert 0.0 unten ist ein Platzhalter – er muss ersetzt werden, nicht übernommen.
+
+## Vorgeschlagene Einträge (25)
+
+```json
+{
+  "globalsecurity.org": 0.0,
+  "livemint.com": 0.0,
+  "moneycontrol.com": 0.0,
+  "en.interfax.com.ua": 0.0,
+  "hurriyetdailynews.com": 0.0,
+  "yahoo.com": 0.0,
+  "dailysabah.com": 0.0,
+  "aninews.in": 0.0,
+  "news.webindia123.com": 0.0,
+  "en.apa.az": 0.0,
+  "economictimes.indiatimes.com": 0.0,
+  "middleeasteye.net": 0.0,
+  "english.aawsat.com": 0.0,
+  "prokerala.com": 0.0,
+  "ibtimes.co.uk": 0.0,
+  "article.wn.com": 0.0,
+  "abc.net.au": 0.0,
+  "newkerala.com": 0.0,
+  "israelnationalnews.com": 0.0,
+  "koreaherald.com": 0.0,
+  "radaronline.com": 0.0,
+  "nknews.org": 0.0,
+  "freemalaysiatoday.com": 0.0,
+  "english.news.cn": 0.0,
+  "benzinga.com": 0.0
+}
+```
+
+## Belege
+
+- https://globalsecurity.org
+- https://livemint.com
+- https://moneycontrol.com
+- https://en.interfax.com.ua
+- https://hurriyetdailynews.com
+- https://yahoo.com
+- https://dailysabah.com
+- https://aninews.in
+- https://news.webindia123.com
+- https://en.apa.az
+
+## Vor dem Übernehmen prüfen
+
+- [ ] Jede Domain einzeln einordnen (-2 links … +2 rechts), Platzhalter 0.0 ersetzen
+- [ ] Staatsnahe Medien gehören in den Abschnitt 'state', nicht in 'bias'
+- [ ] Im Zweifel weglassen: eine falsche Einordnung ist schlechter als keine

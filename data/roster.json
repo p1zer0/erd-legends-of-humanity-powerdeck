@@ -12,7 +12,8 @@
     "staat": "Staatsmacht – Kommandogewalt, Territorium, Gewaltmonopol",
     "tech": "Tech & AI – Rechenleistung, Modelle, Plattformen",
     "kapital": "Kapital – Vermögen, Zinsen, Kapitalallokation",
-    "narrativ": "Narrativ – Reichweite, Deutungshoheit, Aufmerksamkeit"
+    "narrativ": "Narrativ – Reichweite, Deutungshoheit, Aufmerksamkeit",
+    "zivil": "Zivilgesellschaft – Wirkung ohne Amt, Kapital oder Waffen"
   },
 
   "persons": [
@@ -284,6 +285,42 @@
       "expect": "singer",
       "hard": { "militaer": 0, "nuklear": 0, "daten": 35, "compute": 2 },
       "note": "Kulturelle Mobilisierungskraft mit messbarem Effekt auf Wählerregistrierung – Gegenbeweis dazu, dass Macht immer institutionell ist."
+    },
+
+    {
+      "name": "Amnesty International",
+      "faction": "zivil",
+      "expect": "organi",
+      "hard": { "militaer": 0, "nuklear": 0, "daten": 22, "compute": 5, "kapital_override": 15 },
+      "note": "Dokumentation von Menschenrechtsverletzungen als Machtform: Berichte, die Regierungen zwingen, sich zu erklären. Kein Amt, kein Kapital, kein Zwangsmittel."
+    },
+    {
+      "name": "Médecins Sans Frontières",
+      "faction": "zivil",
+      "expect": "organi",
+      "hard": { "militaer": 0, "nuklear": 0, "daten": 18, "compute": 6, "kapital_override": 30 },
+      "note": "Milliardenbudget aus überwiegend privaten Spenden und damit unabhängig von Regierungen – operative Präsenz in Kriegsgebieten, in die Staaten nicht hineinkommen."
+    },
+    {
+      "name": "Greenpeace",
+      "faction": "zivil",
+      "expect": "organi",
+      "hard": { "militaer": 0, "nuklear": 0, "daten": 16, "compute": 5, "kapital_override": 16 },
+      "note": "Erzwingt Aufmerksamkeit durch Aktion statt durch Reichweitenkauf – die Fähigkeit, ein Thema gegen den Willen mächtiger Akteure auf die Tagesordnung zu setzen."
+    },
+    {
+      "name": "International Campaign to Abolish Nuclear Weapons",
+      "faction": "zivil",
+      "expect": "organi",
+      "hard": { "militaer": 0, "nuklear": 0, "daten": 10, "compute": 3, "kapital_override": 4 },
+      "note": "Friedensnobelpreis 2017, treibende Kraft hinter dem UN-Atomwaffenverbotsvertrag. Die kleinste Karte im Deck – und die einzige, deren erklärtes Ziel es ist, den stärksten Wert des Spiels abzuschaffen."
+    },
+    {
+      "name": "Wikimedia Foundation",
+      "faction": "zivil",
+      "expect": "organi",
+      "hard": { "militaer": 0, "nuklear": 0, "daten": 15, "compute": 25, "kapital_override": 12 },
+      "note": "Betreibt das meistgenutzte Nachschlagewerk der Welt und sammelt dabei bewusst kaum Nutzerdaten – niedriger Datenwert als Haltung, nicht als Schwäche. Liefert zugleich die Grundlage dieses Spiels."
     }
   ]
 }

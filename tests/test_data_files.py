@@ -3,8 +3,8 @@
 import json
 import unittest
 
-from powerdeck.config import BIAS_FILE, ROSTER_FILE, WEIGHTS
-from powerdeck.deck import finalize
+from powerdeck.pipeline.build import finalize
+from powerdeck.pipeline.config import BIAS_FILE, ROSTER_FILE, WEIGHTS
 
 HARD_KEYS = {"militaer", "nuklear", "daten", "compute", "kapital_override"}
 
