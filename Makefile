@@ -1,7 +1,7 @@
 PYTHON ?= python3
 export PYTHONPATH := src
 
-.PHONY: help deck deck-fast card play watch loop test lint serve clean clean-cache
+.PHONY: help deck deck-fast card play watch loop heartbeat heartbeat-stop journal test lint serve clean clean-cache
 
 help:
 	@echo "Daten"
@@ -14,7 +14,10 @@ help:
 	@echo "  make watch       Bot gegen Bot, nur zuschauen"
 	@echo ""
 	@echo "Weiterentwicklung"
-	@echo "  make loop        nach Verbesserungen suchen (schreibt nach proposals/)"
+	@echo "  make loop        einmal nach Verbesserungen suchen"
+	@echo "  make heartbeat   dauerhaft weiterentwickeln, bis du stoppst"
+	@echo "  make heartbeat-stop  anhalten"
+	@echo "  make journal     was der Herzschlag getan hat"
 	@echo ""
 	@echo "Entwicklung"
 	@echo "  make test        Testsuite, ohne Netz"
@@ -39,6 +42,15 @@ watch:
 
 loop:
 	$(PYTHON) -m powerdeck loop
+
+heartbeat:
+	$(PYTHON) -m powerdeck heartbeat
+
+heartbeat-stop:
+	$(PYTHON) -m powerdeck heartbeat --stop
+
+journal:
+	$(PYTHON) -m powerdeck heartbeat --journal 40
 
 test:
 	$(PYTHON) -m unittest discover -s tests

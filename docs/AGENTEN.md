@@ -34,6 +34,72 @@ Ein Test beweist, dass die Zieldatei unangetastet bleibt, wenn die Bestätigung
 fehlt (`test_loop.py::Pruefpflicht`). Wer die Grenze verschieben will, muss
 einen Test brechen — nicht nur eine Meinung ändern.
 
+## Der Herzschlag
+
+`python3 -m powerdeck heartbeat` läuft, bis jemand ihn stoppt. Ein Schlag:
+
+1. **Daten auffrischen** — Deck neu bauen, wenn es älter als 20 Stunden ist
+2. **Lücken suchen** — die Aufgaben unten
+3. **Einordnen** — bis zu zehn unbekannte Medien, mit Konsens mehrerer Modelle
+4. **Berichten** — Journal schreiben, Vorschläge ablegen
+
+```bash
+python3 -m powerdeck heartbeat                    # Intervall 1 h, endlos
+python3 -m powerdeck heartbeat --trocken          # alles rechnen, nichts schreiben
+python3 -m powerdeck heartbeat --journal 50       # was er getan hat
+python3 -m powerdeck heartbeat --stop             # anhalten
+```
+
+Als Dauerdienst: `deploy/heartbeat.plist.example` nach `~/Library/LaunchAgents`.
+Mit `KeepAlive` kommt er nach Absturz und Neustart von selbst wieder. Der Stopp
+ist eine bewusste Handlung, kein Nebeneffekt.
+
+Ein fehlgeschlagener Schlag beendet den Herzschlag nicht — er wird ins Journal
+geschrieben, und beim nächsten Mal geht es weiter. Ein Test hält das fest
+(`test_kaputter_schlag_beendet_den_herzschlag_nicht`).
+
+Der Auftrag, an dem er sich ausrichtet, steht in [MISSION.md](MISSION.md).
+
+## Modelle: Kaskade statt einem Anbieter
+
+`agents.example.json` nach `agents.json` kopieren (steht in `.gitignore`). Die
+Liste ist eine Kaskade: Läuft ein Free-Tier-Guthaben leer oder greift ein Limit,
+rutscht der Loop auf den nächsten Anbieter — und ganz unten steht das lokale
+Modell, das nie ausgeht.
+
+| Anbieter | warum |
+|---|---|
+| Groq | großzügiges kostenloses Kontingent, sehr schnell |
+| OpenRouter | Hermes 3 kostenlos über Modelle mit Endung `:free` |
+| Google AI Studio | kostenloses Tageskontingent |
+| Cerebras | kostenloses Kontingent, extrem schnell |
+| Ollama lokal | kein Limit, keine Kosten, kein Netz nötig |
+
+Alle sprechen das OpenAI-Chat-Format — ein Client reicht für alle. Schlüssel als
+`${UMGEBUNGSVARIABLE}` eintragen, dann liegt kein Geheimnis auf der Platte.
+
+## Konsens statt Vertrauen
+
+Die politische Einordnung einer Quelle ist die heikelste Zahl im Projekt. Ein
+einzelnes Modell darf sie nicht setzen: Modelle sind hier messbar unsicher und
+dabei ziemlich selbstbewusst.
+
+Deshalb wird jede Domain **mehrfach unabhängig** gefragt, mit rotierender
+Kaskade, damit möglichst nicht derselbe Anbieter zweimal antwortet. Übernommen
+wird nur, was zusammenpasst:
+
+- gleiche Kategorie (Links-Rechts oder staatsnah)
+- Werte höchstens 0,75 auseinander
+- alle Stimmen mit Sicherheit ≥ 0,5
+
+Alles andere geht als Vorschlag an einen Menschen — mit beiden Einschätzungen
+nebeneinander. **Uneinigkeit ist kein Fehler, sondern die interessantere
+Information:** sie zeigt, wo die Einordnung wirklich strittig ist.
+
+Warum das ohne Menschen laufen darf: Es sind Aussagen über Redaktionen, nicht
+über Personen; bestehende Einträge werden nie überschrieben; jede Änderung ist
+ein Commit und damit umkehrbar.
+
 ## Wie er läuft
 
 ```bash

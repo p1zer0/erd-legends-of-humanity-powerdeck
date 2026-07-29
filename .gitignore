@@ -15,3 +15,8 @@ venv/
 
 # macOS
 .DS_Store
+
+# Agenten-Zugänge und Herzschlag – nie ins Repo
+agents.json
+heartbeat.jsonl
+.heartbeat-stop

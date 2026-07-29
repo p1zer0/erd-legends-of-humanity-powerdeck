@@ -1,0 +1,70 @@
+{
+  "_comment": [
+    "Kopieren nach agents.json (steht in .gitignore, landet nie im Repo).",
+    "Die Reihenfolge ist die Kaskade: oben wird zuerst gefragt, bei Limit oder",
+    "leerem Guthaben rutscht der Loop nach unten. Das lokale Modell steht ganz",
+    "unten, weil es nie ausgeht.",
+    "",
+    "Schlüssel entweder direkt eintragen oder als ${UMGEBUNGSVARIABLE} – die",
+    "zweite Form ist besser, dann liegt das Geheimnis nicht auf der Platte.",
+    "",
+    "Alle Anbieter sprechen das OpenAI-Chat-Format. Wer das auch tut, passt hier",
+    "rein: einfach Zeile kopieren, URL und Modell anpassen."
+  ],
+
+  "anbieter": [
+    {
+      "name": "groq",
+      "aktiv": false,
+      "url": "https://api.groq.com/openai/v1/chat/completions",
+      "modell": "llama-3.3-70b-versatile",
+      "schluessel": "${GROQ_API_KEY}",
+      "hinweis": "Großzügiges kostenloses Kontingent, sehr schnell. console.groq.com"
+    },
+    {
+      "name": "openrouter-frei",
+      "aktiv": false,
+      "url": "https://openrouter.ai/api/v1/chat/completions",
+      "modell": "nousresearch/hermes-3-llama-3.1-405b:free",
+      "schluessel": "${OPENROUTER_API_KEY}",
+      "hinweis": "Hermes 3 kostenlos. Modelle mit Endung :free kosten nichts. openrouter.ai"
+    },
+    {
+      "name": "google-ai-studio",
+      "aktiv": false,
+      "url": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+      "modell": "gemini-2.0-flash",
+      "schluessel": "${GOOGLE_API_KEY}",
+      "hinweis": "Kostenloses Kontingent pro Tag. aistudio.google.com"
+    },
+    {
+      "name": "cerebras",
+      "aktiv": false,
+      "url": "https://api.cerebras.ai/v1/chat/completions",
+      "modell": "llama-3.3-70b",
+      "schluessel": "${CEREBRAS_API_KEY}",
+      "hinweis": "Kostenloses Kontingent, extrem schnell. cloud.cerebras.ai"
+    },
+    {
+      "name": "lokal",
+      "aktiv": true,
+      "url": "http://localhost:11434/v1/chat/completions",
+      "modell": "hermes3",
+      "schluessel": "",
+      "timeout": 300,
+      "hinweis": "Ollama. Einrichten: ollama pull hermes3 && ollama serve. Geht nie aus."
+    }
+  ],
+
+  "konsens": {
+    "_comment": [
+      "Wie viele unabhängige Anbieter einer Einordnung zustimmen müssen, damit",
+      "sie ohne Menschen übernommen wird. Bei 1 entscheidet ein Modell allein –",
+      "nicht empfohlen. Bei 0 wird nie automatisch übernommen.",
+      "Gilt nur für die Bias-Tabelle. Aussagen über Personen bleiben immer",
+      "prüfpflichtig, unabhängig von dieser Zahl."
+    ],
+    "noetig": 2,
+    "toleranz": 0.75
+  }
+}

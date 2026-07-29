@@ -6,6 +6,7 @@ BEFEHLE = {
     "deck": ("powerdeck.pipeline.cli", "cards.json aus offenen Datenquellen bauen"),
     "play": ("powerdeck.game.cli", "eine Partie im Terminal spielen"),
     "loop": ("powerdeck.loop.cli", "Verbesserungen suchen und vorschlagen"),
+    "heartbeat": ("powerdeck.loop.heartbeat", "dauerhaft weiterentwickeln, bis du stoppst"),
 }
 
 
@@ -13,7 +14,7 @@ def hilfe():
     print("Aufruf: python3 -m powerdeck <befehl> [optionen]\n")
     print("Befehle:")
     for name, (_, beschreibung) in BEFEHLE.items():
-        print(f"  {name:<6} {beschreibung}")
+        print(f"  {name:<10} {beschreibung}")
     print("\n  python3 -m powerdeck <befehl> --help  zeigt die Optionen")
 
 

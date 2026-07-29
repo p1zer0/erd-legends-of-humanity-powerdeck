@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Herzschlag als Dauerdienst unter macOS.
+
+  Einrichten:
+    1. PFAD_ZUM_REPO unten durch den echten Pfad ersetzen
+    2. cp deploy/heartbeat.plist.example ~/Library/LaunchAgents/de.erd.powerdeck.heartbeat.plist
+    3. launchctl load ~/Library/LaunchAgents/de.erd.powerdeck.heartbeat.plist
+
+  Anhalten (der laufende Schlag wird noch zu Ende gebracht):
+    python3 -m powerdeck heartbeat --stop
+
+  Ganz abschalten:
+    launchctl unload ~/Library/LaunchAgents/de.erd.powerdeck.heartbeat.plist
+
+  Nachsehen, was er getan hat:
+    python3 -m powerdeck heartbeat --journal 50
+
+  KeepAlive sorgt dafür, dass er nach einem Absturz oder Neustart von selbst
+  wiederkommt. Genau das ist gemeint mit "hört nicht auf, bis ich es stoppe" –
+  der Stopp ist eine bewusste Handlung, kein Nebeneffekt.
+
+  API-Schlüssel gehören in EnvironmentVariables oder besser in agents.json
+  mit ${VARIABLE}-Platzhaltern. Diese Datei landet in ~/Library, nicht im Repo.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>de.erd.powerdeck.heartbeat</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>-m</string>
+        <string>powerdeck</string>
+        <string>heartbeat</string>
+        <string>--intervall</string>
+        <string>3600</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>PFAD_ZUM_REPO</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PYTHONPATH</key>
+        <string>PFAD_ZUM_REPO/src</string>
+        <!-- Schlüssel hier eintragen, wenn agents.json ${VARIABLE} nutzt:
+        <key>GROQ_API_KEY</key>
+        <string>...</string>
+        -->
+    </dict>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>PFAD_ZUM_REPO/heartbeat.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>PFAD_ZUM_REPO/heartbeat.err.log</string>
+
+    <!-- Niedrige Priorität: der Herzschlag soll nie im Weg sein. -->
+    <key>Nice</key>
+    <integer>10</integer>
+    <key>ProcessType</key>
+    <string>Background</string>
+</dict>
+</plist>

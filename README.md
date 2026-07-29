@@ -18,7 +18,8 @@ make deck        # Kartendaten aus offenen Quellen bauen (~25 min)
 make deck-fast   # dasselbe ohne GDELT (~1 min)
 make play        # eine Partie im Terminal
 make watch       # Bot gegen Bot, nur zuschauen
-make loop        # nach Verbesserungen suchen
+make loop        # einmal nach Verbesserungen suchen
+make heartbeat   # dauerhaft weiterentwickeln, bis du stoppst
 make test        # 86 Tests, ohne Netz
 make serve       # Kartenvorschau auf localhost:8000
 ```
@@ -110,6 +111,11 @@ Medien noch nicht eingeordnet sind, welche stark nachgeschlagenen Personen im
 Deck fehlen, welche Karten die Welt von gestern zeigen. Ein Workflow lässt ihn
 wöchentlich laufen und öffnet einen Pull Request.
 
+`make heartbeat` lässt ihn dauerhaft laufen — Deck auffrischen, Lücken suchen,
+Medien einordnen, Journal schreiben, warten, wiederholen. Er hört nicht auf, bis
+`make heartbeat-stop` kommt. Modelle hängen als Kaskade dahinter: erst die
+Free-Tier-Guthaben, ganz unten ein lokales Modell, das nie ausgeht.
+
 **Der Loop schlägt vor, ein Mensch entscheidet.** Änderungen an `data/roster.json`
 sind prüfpflichtig und lassen sich ohne ausdrückliche Bestätigung nicht
 übernehmen — durchgesetzt im Code, nicht nur in der Doku. Begründung und die
@@ -140,7 +146,8 @@ der Token am Ende der Reihenfolge und nicht am Anfang. Vollständig in
 | [VISION.md](docs/VISION.md) | Was das Spiel will, in welchen Phasen, und was es nicht ist |
 | [SPIELREGELN.md](docs/SPIELREGELN.md) | Regeln, Konter-Rad, Eskalation, Stellschrauben |
 | [ARCHITEKTUR.md](docs/ARCHITEKTUR.md) | Schichten, Grenzen, Entscheidungen im Rückblick |
-| [AGENTEN.md](docs/AGENTEN.md) | Der Verbesserungs-Loop und seine Leitplanken |
+| [MISSION.md](docs/MISSION.md) | Der Auftrag, an dem der Herzschlag sich ausrichtet |
+| [AGENTEN.md](docs/AGENTEN.md) | Herzschlag, Modell-Kaskade, Konsens und Leitplanken |
 | [RECHTLICHES.md](docs/RECHTLICHES.md) | MiCA, Glücksspiel, Persönlichkeitsrecht, Lizenzen |
 | [ROADMAP.md](docs/ROADMAP.md) | Neun Ausbauwege nach Aufwand |
 
