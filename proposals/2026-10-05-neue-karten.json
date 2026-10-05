@@ -1,0 +1,186 @@
+{
+  "aufgabe": "neue-karten",
+  "datei": "data/roster.json",
+  "titel": "12 stark nachgeschlagene Personen fehlen im Deck",
+  "begruendung": "Aus den meistgelesenen englischen Wikipedia-Artikeln vom 2026-10-03 sind das die Personen und Organisationen, die noch nicht im Roster stehen.\n\nHohe Aufmerksamkeit ist ein Hinweis, kein Aufnahmegrund. Aufgenommen wird, wer über eine der fünf Machtformen tatsächlich verfügt – Prominenz allein reicht nicht.",
+  "eintraege": {
+    "Q5109030": {
+      "name": "Christa Pike",
+      "faction": "",
+      "expect": "",
+      "hard": {
+        "militaer": 0,
+        "nuklear": 0,
+        "daten": 0,
+        "compute": 0
+      },
+      "note": "",
+      "_hinweis": "American murderer · 799,409 Aufrufe am 2026-10-03 · mensch"
+    },
+    "Q27016751": {
+      "name": "2026 Asian Games",
+      "faction": "",
+      "expect": "",
+      "hard": {
+        "militaer": 0,
+        "nuklear": 0,
+        "daten": 0,
+        "compute": 0
+      },
+      "note": "",
+      "_hinweis": "20th Asian Games co-hosted by Aichi Prefecture and Nagoya City, Japan · 469,229 Aufrufe am 2026-10-03 · organisation"
+    },
+    "Q222134": {
+      "name": "Ted Kaczynski",
+      "faction": "",
+      "expect": "",
+      "hard": {
+        "militaer": 0,
+        "nuklear": 0,
+        "daten": 0,
+        "compute": 0
+      },
+      "note": "",
+      "_hinweis": "American mathematician and domestic terrorist (1942–2023) · 195,350 Aufrufe am 2026-10-03 · mensch"
+    },
+    "Q62079208": {
+      "name": "Gypsy-Rose Blanchard",
+      "faction": "",
+      "expect": "",
+      "hard": {
+        "militaer": 0,
+        "nuklear": 0,
+        "daten": 0,
+        "compute": 0
+      },
+      "note": "",
+      "_hinweis": "American internet personality (born 1991) · 182,914 Aufrufe am 2026-10-03 · mensch"
+    },
+    "Q240496": {
+      "name": "Lizzie Borden",
+      "faction": "",
+      "expect": "",
+      "hard": {
+        "militaer": 0,
+        "nuklear": 0,
+        "daten": 0,
+        "compute": 0
+      },
+      "note": "",
+      "_hinweis": "American murder suspect (1860–1927) · 174,410 Aufrufe am 2026-10-03 · mensch"
+    },
+    "Q24891605": {
+      "name": "Bella Ramsey",
+      "faction": "",
+      "expect": "",
+      "hard": {
+        "militaer": 0,
+        "nuklear": 0,
+        "daten": 0,
+        "compute": 0
+      },
+      "note": "",
+      "_hinweis": "British actor · 105,487 Aufrufe am 2026-10-03 · mensch"
+    },
+    "Q380856": {
+      "name": "Richard E. Grant",
+      "faction": "",
+      "expect": "",
+      "hard": {
+        "militaer": 0,
+        "nuklear": 0,
+        "daten": 0,
+        "compute": 0
+      },
+      "note": "",
+      "_hinweis": "British-Swazi actor · 105,221 Aufrufe am 2026-10-03 · mensch"
+    },
+    "Q60809": {
+      "name": "Ansel Adams",
+      "faction": "",
+      "expect": "",
+      "hard": {
+        "militaer": 0,
+        "nuklear": 0,
+        "daten": 0,
+        "compute": 0
+      },
+      "note": "",
+      "_hinweis": "American photographer and environmentalist (1902–1984) · 101,625 Aufrufe am 2026-10-03 · mensch"
+    },
+    "Q264849": {
+      "name": "Aileen Wuornos",
+      "faction": "",
+      "expect": "",
+      "hard": {
+        "militaer": 0,
+        "nuklear": 0,
+        "daten": 0,
+        "compute": 0
+      },
+      "note": "",
+      "_hinweis": "American serial killer (1956–2002) · 87,115 Aufrufe am 2026-10-03 · mensch"
+    },
+    "Q24004789": {
+      "name": "Sebastian Croft",
+      "faction": "",
+      "expect": "",
+      "hard": {
+        "militaer": 0,
+        "nuklear": 0,
+        "daten": 0,
+        "compute": 0
+      },
+      "note": "",
+      "_hinweis": "British actor · 68,061 Aufrufe am 2026-10-03 · mensch"
+    },
+    "Q22277803": {
+      "name": "Florence Pugh",
+      "faction": "",
+      "expect": "",
+      "hard": {
+        "militaer": 0,
+        "nuklear": 0,
+        "daten": 0,
+        "compute": 0
+      },
+      "note": "",
+      "_hinweis": "British actress (born 1996) · 67,708 Aufrufe am 2026-10-03 · mensch"
+    },
+    "Q106770023": {
+      "name": "Zach Bryan",
+      "faction": "",
+      "expect": "",
+      "hard": {
+        "militaer": 0,
+        "nuklear": 0,
+        "daten": 0,
+        "compute": 0
+      },
+      "note": "",
+      "_hinweis": "American country musician · 63,370 Aufrufe am 2026-10-03 · mensch"
+    }
+  },
+  "belege": [
+    "https://en.wikipedia.org/wiki/Christa_Pike",
+    "https://en.wikipedia.org/wiki/2026_Asian_Games",
+    "https://en.wikipedia.org/wiki/Ted_Kaczynski",
+    "https://en.wikipedia.org/wiki/Gypsy-Rose_Blanchard",
+    "https://en.wikipedia.org/wiki/Lizzie_Borden",
+    "https://en.wikipedia.org/wiki/Bella_Ramsey",
+    "https://en.wikipedia.org/wiki/Richard_E._Grant",
+    "https://en.wikipedia.org/wiki/Ansel_Adams",
+    "https://en.wikipedia.org/wiki/Aileen_Wuornos",
+    "https://en.wikipedia.org/wiki/Sebastian_Croft",
+    "https://en.wikipedia.org/wiki/Florence_Pugh",
+    "https://en.wikipedia.org/wiki/Zach_Bryan"
+  ],
+  "hinweise": [
+    "Fraktion setzen (staat / tech / kapital / narrativ / zivil)",
+    "Hartwerte begründen – ohne 'note' gehört keine Karte ins Deck",
+    "'expect' auf ein Stichwort der Rolle setzen, damit der Frische-Check greift",
+    "Prominenz ist keine Macht: im Zweifel nicht aufnehmen",
+    "Feld '_hinweis' vor dem Übernehmen entfernen"
+  ],
+  "erzeugt_am": "2026-10-05"
+}
