@@ -1,0 +1,199 @@
+# 12 stark nachgeschlagene Personen fehlen im Deck
+
+**Aufgabe:** `neue-karten`  
+**Datei:** `data/roster.json`  
+**Erzeugt:** 2026-10-12
+
+## Begründung
+
+Aus den meistgelesenen englischen Wikipedia-Artikeln vom 2026-10-10 sind das die Personen und Organisationen, die noch nicht im Roster stehen.
+
+Hohe Aufmerksamkeit ist ein Hinweis, kein Aufnahmegrund. Aufgenommen wird, wer über eine der fünf Machtformen tatsächlich verfügt – Prominenz allein reicht nicht.
+
+## Vorgeschlagene Einträge (12)
+
+```json
+{
+  "Q1400551": {
+    "name": "Nidal Hasan",
+    "faction": "",
+    "expect": "",
+    "hard": {
+      "militaer": 0,
+      "nuklear": 0,
+      "daten": 0,
+      "compute": 0
+    },
+    "note": "",
+    "_hinweis": "American Army officer and mass murderer (born 1970) · 382,214 Aufrufe am 2026-10-10 · mensch"
+  },
+  "Q1355840": {
+    "name": "Mike Ditka",
+    "faction": "",
+    "expect": "",
+    "hard": {
+      "militaer": 0,
+      "nuklear": 0,
+      "daten": 0,
+      "compute": 0
+    },
+    "note": "",
+    "_hinweis": "American football player, coach, and television commentator (1939-2026) · 361,505 Aufrufe am 2026-10-10 · mensch"
+  },
+  "Q5109030": {
+    "name": "Christa Pike",
+    "faction": "",
+    "expect": "",
+    "hard": {
+      "militaer": 0,
+      "nuklear": 0,
+      "daten": 0,
+      "compute": 0
+    },
+    "note": "",
+    "_hinweis": "American murderer (born 1976) · 204,814 Aufrufe am 2026-10-10 · mensch"
+  },
+  "Q242078": {
+    "name": "Navi Pillay",
+    "faction": "",
+    "expect": "",
+    "hard": {
+      "militaer": 0,
+      "nuklear": 0,
+      "daten": 0,
+      "compute": 0
+    },
+    "note": "",
+    "_hinweis": "South African lawyer, judge, and human rights activist · 178,275 Aufrufe am 2026-10-10 · mensch"
+  },
+  "Q141681561": {
+    "name": "Katie Zacharia",
+    "faction": "",
+    "expect": "",
+    "hard": {
+      "militaer": 0,
+      "nuklear": 0,
+      "daten": 0,
+      "compute": 0
+    },
+    "note": "",
+    "_hinweis": "American lawyer, political commentator, and government official · 151,159 Aufrufe am 2026-10-10 · mensch"
+  },
+  "Q137189639": {
+    "name": "Susan Dell",
+    "faction": "",
+    "expect": "",
+    "hard": {
+      "militaer": 0,
+      "nuklear": 0,
+      "daten": 0,
+      "compute": 0
+    },
+    "note": "",
+    "_hinweis": "American philanthropist · 118,757 Aufrufe am 2026-10-10 · mensch"
+  },
+  "Q60809": {
+    "name": "Ansel Adams",
+    "faction": "",
+    "expect": "",
+    "hard": {
+      "militaer": 0,
+      "nuklear": 0,
+      "daten": 0,
+      "compute": 0
+    },
+    "note": "",
+    "_hinweis": "American photographer and environmentalist (1902–1984) · 101,952 Aufrufe am 2026-10-10 · mensch"
+  },
+  "Q2475741": {
+    "name": "Nana Patekar",
+    "faction": "",
+    "expect": "",
+    "hard": {
+      "militaer": 0,
+      "nuklear": 0,
+      "daten": 0,
+      "compute": 0
+    },
+    "note": "",
+    "_hinweis": "Indian philanthropist, writer, film actor, and filmmaker (1951–2026) · 99,473 Aufrufe am 2026-10-10 · mensch"
+  },
+  "Q240496": {
+    "name": "Lizzie Borden",
+    "faction": "",
+    "expect": "",
+    "hard": {
+      "militaer": 0,
+      "nuklear": 0,
+      "daten": 0,
+      "compute": 0
+    },
+    "note": "",
+    "_hinweis": "American murder suspect (1860–1927) · 91,079 Aufrufe am 2026-10-10 · mensch"
+  },
+  "Q222134": {
+    "name": "Ted Kaczynski",
+    "faction": "",
+    "expect": "",
+    "hard": {
+      "militaer": 0,
+      "nuklear": 0,
+      "daten": 0,
+      "compute": 0
+    },
+    "note": "",
+    "_hinweis": "American mathematician and domestic terrorist (1942–2023) · 87,149 Aufrufe am 2026-10-10 · mensch"
+  },
+  "Q96376333": {
+    "name": "Dhruv Rathee",
+    "faction": "",
+    "expect": "",
+    "hard": {
+      "militaer": 0,
+      "nuklear": 0,
+      "daten": 0,
+      "compute": 0
+    },
+    "note": "",
+    "_hinweis": "Indian influencer and activist · 83,322 Aufrufe am 2026-10-10 · mensch"
+  },
+  "Q303957": {
+    "name": "Josh Hartnett",
+    "faction": "",
+    "expect": "",
+    "hard": {
+      "militaer": 0,
+      "nuklear": 0,
+      "daten": 0,
+      "compute": 0
+    },
+    "note": "",
+    "_hinweis": "American actor and producer (born 1978) · 74,468 Aufrufe am 2026-10-10 · mensch"
+  }
+}
+```
+
+## Belege
+
+- https://en.wikipedia.org/wiki/Nidal_Hasan
+- https://en.wikipedia.org/wiki/Mike_Ditka
+- https://en.wikipedia.org/wiki/Christa_Pike
+- https://en.wikipedia.org/wiki/Navi_Pillay
+- https://en.wikipedia.org/wiki/Katie_Zacharia
+- https://en.wikipedia.org/wiki/Susan_Dell
+- https://en.wikipedia.org/wiki/Ansel_Adams
+- https://en.wikipedia.org/wiki/Nana_Patekar
+- https://en.wikipedia.org/wiki/Lizzie_Borden
+- https://en.wikipedia.org/wiki/Ted_Kaczynski
+- https://en.wikipedia.org/wiki/Dhruv_Rathee
+- https://en.wikipedia.org/wiki/Josh_Hartnett
+
+## Vor dem Übernehmen prüfen
+
+- [ ] Fraktion setzen (staat / tech / kapital / narrativ / zivil)
+- [ ] Hartwerte begründen – ohne 'note' gehört keine Karte ins Deck
+- [ ] 'expect' auf ein Stichwort der Rolle setzen, damit der Frische-Check greift
+- [ ] Prominenz ist keine Macht: im Zweifel nicht aufnehmen
+- [ ] Feld '_hinweis' vor dem Übernehmen entfernen
+
+> **Prüfpflichtig.** Diese Datei enthält Aussagen über reale Personen und Organisationen. Nicht ungelesen übernehmen.
